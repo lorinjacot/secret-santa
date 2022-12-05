@@ -31,7 +31,7 @@ class PartnerMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Secret Santa : Ton partenaire',
+            subject: 'Secret Santa physique rpz: Ton partenaire',
         );
     }
 

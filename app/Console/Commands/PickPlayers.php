@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\PartnerMail;
 use App\Models\Player;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class PickPlayers extends Command
 {
@@ -30,19 +32,30 @@ class PickPlayers extends Command
     {
         $players = Player::where('picked_by', null)->get()->shuffle();
         $playersCount = $players->count();
-        if ($playersCount == 1) {
-            $this->error('Il n\'y a qu\'un seul joueur libre!');
+        if ($playersCount <= 1) {
+            $this->error('Il pas assez de joueurs libres!');
             return 1;
         }
-        $players->each(function ($player, $index) use ($playersCount, $players) {
+
+        $bar = $this->output->createProgressBar($playersCount);
+        $bar->start();
+
+        $players->each(function ($player, $index) use ($playersCount, $players, $bar) {
             $nextIndex = $index + 1;
             if ($nextIndex == $playersCount) {
                 $nextIndex = 0;
             }
             $nextPlayer = $players[$nextIndex];
             $player->picked_by = $nextPlayer->id;
-            $player->save();
+            Mail::to($player->email)->send(new PartnerMail($player->name, $nextPlayer->name));
+
+            $player->delete();
+
+            $bar->advance();
         });
+        
+        $bar->finish();
+        $this->newLine();
 
         $this->info('Les joueurs ont été associés avec succès!');
 
