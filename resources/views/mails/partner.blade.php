@@ -1,0 +1,1 @@
+Salut {{ $name }}, ton partenaire du secret santa est {{ $partnerName }}.
