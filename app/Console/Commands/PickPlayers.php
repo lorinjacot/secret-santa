@@ -30,7 +30,7 @@ class PickPlayers extends Command
      */
     public function handle()
     {
-        $players = Player::where('picked_by', null)->get()->shuffle();
+        $players = Player::where('has_partner', false)->get()->shuffle();
         $playersCount = $players->count();
         if ($playersCount <= 1) {
             $this->error('Il pas assez de joueurs libres!');
@@ -46,10 +46,10 @@ class PickPlayers extends Command
                 $nextIndex = 0;
             }
             $nextPlayer = $players[$nextIndex];
-            $player->picked_by = $nextPlayer->id;
             Mail::to($player->email)->send(new PartnerMail($player->name, $nextPlayer->name));
 
-            $player->delete();
+            $player->has_partner = true;
+            $player->save();
 
             $bar->advance();
         });

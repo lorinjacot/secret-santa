@@ -12,16 +12,10 @@ class Player extends Model
     protected $fillable = [
         'name',
         'email',
-        'picked_by',
+        'has_partner',
     ];
 
-    public function pickedBy()
-    {
-        return $this->belongsTo(Player::class, 'picked_by');
-    }
-
-    public function picked()
-    {
-        return $this->hasOne(Player::class, 'picked_by');
-    }
+    protected $casts = [
+        'has_partner' => 'boolean',
+    ];
 }
