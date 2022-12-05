@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <h1>Inscription au secret santa</h1>
+    <h1>Inscription au secret santa de physique rpz</h1>
     <form action="{{ route('submit') }}" method="post">
         @csrf
         @if ($errors->any())
