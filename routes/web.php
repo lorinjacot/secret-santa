@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PickPlayerController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(PickPlayerController::class)->group(function () {
-    Route::get('/', 'home')->name('home');
-    Route::post('/', 'submit')->name('submit');
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'message_form')->name('message_form');
+    Route::post('/', 'send_message')->name('send_message');
 });

@@ -12,7 +12,7 @@
 
 <body>
     <h1>Inscription au secret santa de physique rpz</h1>
-    <form action="{{ route('submit') }}" method="post">
+    <form action="{{ route('signedup') }}" method="post">
         @csrf
         @if ($errors->any())
         <div>
