@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Player>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Conversation>
  */
-class PlayerFactory extends Factory
+class ConversationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class PlayerFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
-            'has_partner' => $this->faker->boolean,
+            //
         ];
     }
 }
