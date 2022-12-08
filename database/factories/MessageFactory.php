@@ -19,6 +19,7 @@ class MessageFactory extends Factory
         return [
             'conversation_id' => \App\Models\Conversation::factory(),
             'content' => $this->faker->sentence,
+            'is_giver' => $this->faker->boolean,
         ];
     }
 }

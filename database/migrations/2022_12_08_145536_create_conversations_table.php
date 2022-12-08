@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
+            $table->string('giver_slug')->unique();
+            $table->string('receiver_slug')->unique();
             $table->timestamps();
         });
     }

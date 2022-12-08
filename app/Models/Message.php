@@ -12,6 +12,12 @@ class Message extends Model
     protected $fillable = [
         'conversation_id',
         'content',
+        'is_giver',
+    ];
+
+    protected $casts = [
+        'conversation_id' => 'integer',
+        'is_giver' => 'boolean',
     ];
 
     public function conversation()

@@ -10,12 +10,14 @@ class Conversation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'slug',
+        'giver_slug',
+        'receiver_slug',
     ];
 
     public function __construct(array $attributes = [])
     {
-        $this->slug = md5(uniqid());
+        $this->giver_slug = md5(uniqid());
+        $this->receiver_slug = md5(uniqid());
         parent::__construct($attributes);
     }
 

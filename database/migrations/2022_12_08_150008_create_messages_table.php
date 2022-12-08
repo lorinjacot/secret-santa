@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('conversation_id')->constrained()->cascadeOnDelete();
             $table->string('content');
+            $table->boolean('is_giver');
             $table->timestamps();
         });
     }
