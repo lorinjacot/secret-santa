@@ -5,4 +5,6 @@
         <p><a href="{{ $giver_route }}">{{ $giver_route }}</a></p>
     </blockquote>
     <p>Ne le perds pas, sinon tu ne pourras plus accéder à la conversation!</p>
+
+    <livewire:conversations.subscription-form :conversation="$conversation" :is_giver="true"/>
 </x-app-layout>

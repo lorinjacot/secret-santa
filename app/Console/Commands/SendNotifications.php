@@ -33,14 +33,18 @@ class SendNotifications extends Command
         $this->withProgressBar(Conversation::all(), function (Conversation $conversation) {
             $unread_messages = $conversation->messages()->where('read', false)->get();
             $conversation->subscriptions()->each(function ($subscription) use ($unread_messages) {
-                $route_name = $subscription->is_giver ? 'show_giver' : 'show_receiver';
-                $url = route($route_name, $subscription->conversation_id);
                 $messages = $unread_messages->filter(function ($message) use ($subscription) {
                     return $message->is_giver !== $subscription->is_giver;
                 });
-                Mail::to($subscription->email)->send(new NotificationMail($url, $messages));
+                if ($messages) {
+                    $route_name = $subscription->is_giver ? 'show_giver' : 'show_receiver';
+                    $url = route('conversations.' . $route_name, [$subscription->conversation_id]);
+                    Mail::to($subscription->email)->send(new NotificationMail($url, $messages));
+                }
             });
         });
+        $this->newLine();
+        $this->info('Notifications envoyées');
 
         return Command::SUCCESS;
     }

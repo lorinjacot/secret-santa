@@ -19,7 +19,7 @@ class NotificationMail extends Mailable
      *
      * @return void
      */
-    public function __construct(public string $conversation_url, public array $messages)
+    public function __construct(public string $conversation_url, public $messages)
     {
         //
     }

@@ -33,6 +33,7 @@ class ConversationController extends Controller
 
         return view('conversations.store', [
             'giver_route' => route('conversations.show_giver', $conversation),
+            'conversation' => $conversation,
         ]);
     }
 
