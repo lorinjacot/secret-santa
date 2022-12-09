@@ -1,13 +1,16 @@
 <div>
     <ul wire:poll>
-        @foreach ($conversation->messages as $message)
+        @forelse ($conversation->messages as $message)
             <li>
+                {{-- <small>{{ $message->created_at }}</small> --}}
                 @if ($message->is_giver)
                     <em>{{ $message->content }}</em>
                 @else
                     {{ $message->content }}
                 @endif
             </li>
-        @endforeach
+        @empty
+            <p>Aucun message</p>
+        @endforelse
     </ul>
 </div>
