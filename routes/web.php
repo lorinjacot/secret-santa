@@ -19,6 +19,13 @@ Route::get('', function () {
     return redirect()->route('conversations.create');
 });
 
+Route::controller(HomeController::class)->prefix('')->name('')->group(function () {
+    Route::get('/message', 'message_form')->name('message_form');
+    Route::post('/message', 'send_message')->name('send_message');
+    Route::get('/signup', 'signup')->name('signup');
+    Route::post('/signup', 'signedup')->name('signedup');
+});
+
 Route::controller(ConversationController::class)->prefix('conversations')->name('conversations.')->group(function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/', 'store')->name('store');

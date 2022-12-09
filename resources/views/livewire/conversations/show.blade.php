@@ -3,7 +3,7 @@
         @forelse ($conversation->messages as $message)
             <li>
                 {{-- <small>{{ $message->created_at }}</small> --}}
-                @if ($message->is_giver)
+                @if ($message->is_giver === $is_giver)
                     <em>{{ $message->content }}</em>
                 @else
                     {{ $message->content }}
