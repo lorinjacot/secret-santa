@@ -10,7 +10,10 @@ class ConversationController extends Controller
 {
     public function create()
     {
-        return view('conversations.create');
+        $players = Player::where('has_partner', true)->get();
+        return view('conversations.create', [
+            'players' => $players,
+        ]);
     }
 
     public function store(Request $request)

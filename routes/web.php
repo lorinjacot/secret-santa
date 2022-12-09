@@ -15,9 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(HomeController::class)->group(function () {
-    Route::get('/', 'message_form')->name('message_form');
-    Route::post('/', 'send_message')->name('send_message');
+Route::get('', function () {
+    return redirect()->route('conversations.create');
 });
 
 Route::controller(ConversationController::class)->prefix('conversations')->name('conversations.')->group(function () {
