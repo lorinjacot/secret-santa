@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Message>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subscription>
  */
-class MessageFactory extends Factory
+class SubscriptionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,10 +17,9 @@ class MessageFactory extends Factory
     public function definition()
     {
         return [
+            'email' => $this->faker->email,
             'conversation_id' => \App\Models\Conversation::factory(),
-            'content' => $this->faker->sentence,
             'is_giver' => $this->faker->boolean,
-            'read' => true,
         ];
     }
 }
