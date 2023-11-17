@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\NewTarget;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class GivePartner extends Command
 {
@@ -38,5 +40,11 @@ class GivePartner extends Command
         });
 
         $this->info('Les partenaires ont été attribués.');
+
+        $players->each(function (User $player) {
+            Mail::to($player)->send(new NewTarget($player->name, $player->target->name));
+        });
+
+        $this->info('Les emails ont été envoyés.');
     }
 }
