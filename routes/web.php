@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard');
 
-Route::view('dashboard', 'dashboard')
+Route::view('dashboard', 'dashboard', ['users_count' => User::count()])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
