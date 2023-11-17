@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -59,5 +60,29 @@ class User extends Authenticatable
     public function partner(): HasOne
     {
         return $this->hasOne(User::class, 'target_id');
+    }
+
+    /**
+     * La conversion où l'utilisateur actuel est le père Noël.
+     */
+    public function santaConversation(): HasOne
+    {
+        return $this->hasOne(Conversation::class, 'santa_id');
+    }
+
+    /**
+     * La conversion où l'utilisateur actuel est est la cible.
+     */
+    public function targetConversation(): HasOne
+    {
+        return $this->hasOne(Conversation::class, 'target_id');
+    }
+
+    /**
+     * Les messages envoyés par l'utilisateur actuel.
+     */
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'sender_id');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\NewTarget;
+use App\Models\Conversation;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -34,9 +35,13 @@ class GivePartner extends Command
             return 1;
         }
 
-        $players->each(function (User $player, $index) use ($players) {
-            $nextIndex = ($index + 1) % $players->count();
-            $player->target()->associate($players[$nextIndex])->save();
+        $players->each(function (User $santa, $index) use ($players) {
+            $targetIndex = ($index + 1) % $players->count();
+            $santa->target()->associate($players[$targetIndex])->save();
+            Conversation::create([
+                'santa_id' => $santa->id,
+                'target_id' => $players[$targetIndex]->id,
+            ]);
         });
 
         $this->info('Les partenaires ont été attribués.');
