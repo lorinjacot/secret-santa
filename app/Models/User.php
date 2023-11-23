@@ -85,4 +85,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
+
+    /**
+     * Les images envoyées par l'utilisateur actuel.
+     */
+    public function sentImages(): HasMany
+    {
+        return $this->hasMany(Image::class, 'sender_id');
+    }
 }

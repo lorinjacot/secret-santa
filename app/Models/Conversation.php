@@ -39,4 +39,12 @@ class Conversation extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    /**
+     * Les images de cette conversation.
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
 }
