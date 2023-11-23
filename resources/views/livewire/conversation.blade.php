@@ -3,6 +3,7 @@
 use Livewire\Volt\Component;
 use Livewire\Attributes\Locked;
 use Livewire\WithFileUploads;
+use App\Notifications\NewMessage;
 
 new class extends Component {
     use WithFileUploads;
@@ -19,13 +20,15 @@ new class extends Component {
         $this->validate([
             'content' => ['required', 'string'],
         ]);
-        $this->conversation->messages()->create([
+        $message =  $this->conversation->messages()->create([
             'conversation_id' => $this->conversation->id,
             'sender_id' => auth()->id(),
             'content' => $this->content,
         ]);
 
         $this->content = '';
+
+        $this->sendNotification($message);
     }
 
     public function sendImage()
@@ -34,13 +37,24 @@ new class extends Component {
             'file' => ['required', 'image'],
         ]);
 
-        $this->conversation->images()->create([
+        $message = $this->conversation->images()->create([
             'conversation_id' => $this->conversation->id,
             'sender_id' => auth()->id(),
             'path' => $this->file->store('images', 'public'),
         ]);
 
         $this->file = null;
+
+        $this->sendNotification($message);
+    }   
+
+    protected function sendNotification($message)
+    {
+        $recipient = $this->conversation->santa;
+        if ($message->sender_id === $this->conversation->santa_id) {
+            $recipient = $this->conversation->target;
+        }
+        $recipient->notify(new NewMessage($message));
     }
 }; ?>
 
