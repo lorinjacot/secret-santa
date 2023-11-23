@@ -57,7 +57,7 @@ class User extends Authenticatable
     /**
      * L'utilisateur qui doit donner des cadeaux à l'utilisateur actuel.
      */
-    public function partner(): HasOne
+    public function santa(): HasOne
     {
         return $this->hasOne(User::class, 'target_id');
     }
