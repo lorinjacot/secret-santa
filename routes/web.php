@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard');
 
-Route::view('dashboard', 'dashboard', ['users_count' => User::count()])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('dashboard', function () {
+    return view('dashboard', ['users_count' => User::count(), 'user' => auth()->user()]);
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Volt::route('conversation/with-santa', 'pages.conversation.with-santa')
+        ->name('conversation.santa');
+    Volt::route('conversation/with-target', 'pages.conversation.with-target')
+        ->name('conversation.target');
+});
 
 require __DIR__.'/auth.php';
