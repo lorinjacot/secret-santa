@@ -34,6 +34,14 @@ new class extends Component
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if (auth()->user()->target)
+                        <x-nav-link :href="route('conversation.santa')" :active="request()->routeIs('conversation.santa')" wire:navigate>
+                            Conversation avec ton Père Noël ❤️
+                        </x-nav-link>
+                        <x-nav-link :href="route('conversation.target')" :active="request()->routeIs('conversation.target')" wire:navigate>
+                            Conversation avec ta cible 😈
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -85,6 +93,14 @@ new class extends Component
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if (auth()->user()->target)
+            <x-responsive-nav-link :href="route('conversation.santa')" :active="request()->routeIs('conversation.santa')" wire:navigate>
+                Conversation avec ton Père Noël ❤️
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('conversation.target')" :active="request()->routeIs('conversation.target')" wire:navigate>
+                Conversation avec ta cible 😈
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
