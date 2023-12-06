@@ -20,7 +20,10 @@ new class extends Component {
 
     public function sendMessage()
     {
-        $this->validate();
+        $this->validate([
+            'content' => 'required|string',
+        ]);
+
         $message =  $this->conversation->messages()->create([
             'conversation_id' => $this->conversation->id,
             'sender_id' => auth()->id(),
@@ -34,7 +37,9 @@ new class extends Component {
 
     public function sendImage()
     {
-        $this->validate();
+        $this->validate([
+            'file' => 'required|image|mimes:png,jpg,jpeg,gif',
+        ]);
 
         $message = $this->conversation->images()->create([
             'conversation_id' => $this->conversation->id,
