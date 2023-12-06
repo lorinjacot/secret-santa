@@ -15,7 +15,7 @@ new class extends Component {
     #[Validate('required|string')]
     public $content;
 
-    #[Validate('required|image')]
+    #[Validate('required|image|mimes:png,jpg,jpeg,gif')]
     public $file;
 
     public function sendMessage()
