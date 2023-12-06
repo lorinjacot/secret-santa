@@ -4,6 +4,7 @@ use Livewire\Volt\Component;
 use Livewire\Attributes\Locked;
 use Livewire\WithFileUploads;
 use App\Notifications\NewMessage;
+use Livewire\Attributes\Validate;
 
 new class extends Component {
     use WithFileUploads;
@@ -11,15 +12,15 @@ new class extends Component {
     #[Locked]
     public $conversation;
 
+    #[Validate('required|string')]
     public $content;
 
+    #[Validate('required|image')]
     public $file;
 
     public function sendMessage()
     {
-        $this->validate([
-            'content' => ['required', 'string'],
-        ]);
+        $this->validate();
         $message =  $this->conversation->messages()->create([
             'conversation_id' => $this->conversation->id,
             'sender_id' => auth()->id(),
@@ -33,9 +34,7 @@ new class extends Component {
 
     public function sendImage()
     {
-        $this->validate([
-            'file' => ['required', 'image'],
-        ]);
+        $this->validate();
 
         $message = $this->conversation->images()->create([
             'conversation_id' => $this->conversation->id,
