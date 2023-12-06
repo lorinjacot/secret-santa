@@ -61,7 +61,7 @@ new class extends Component {
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mx-auto max-w-screen-sm">
-            <div class="p-4 space-y-3 h-[60vh] overflow-scroll" x-data x-init="() => { $el.scrollTop = $el.scrollHeight; }" wire:poll>
+            <div class="p-4 space-y-3 h-[50vh] overflow-scroll" x-data x-init="() => { $el.scrollTop = $el.scrollHeight; }" wire:poll>
                 @foreach ($conversation->messages->concat($conversation->images)->sortBy('created_at')->values()->all() as $message)
                     @if ($message->sender_id === auth()->user()->id)
                         <div class="p-2 rounded-md max-w-[90%] w-fit ml-auto mr-0 bg-blue-300">
@@ -97,7 +97,7 @@ new class extends Component {
     <x-modal name="send-image">
         <form x-on:submit.prevent="() => { show=false; $wire.sendImage() }" class="p-6">
             <h2 class="text-lg font-medium text-gray-900">
-                Envoyer une image
+                Envoyer une image (attention, les .heic ne sont pas supportés)
             </h2>
             @if ($file)
                 <div>
@@ -105,7 +105,7 @@ new class extends Component {
                 </div>
             @endif
             <div class="mt-6">
-                <input type="file" name="file" id="file" wire:model="file">
+                <input type="file" accept="image/*" name="file" id="file" wire:model="file">
             </div>
             <div class="mt-6 flex justify-end">
                 <button class="border-2 border-blue-300 py-1 px-2 rounded-lg" type="submit">Envoyer</button>
