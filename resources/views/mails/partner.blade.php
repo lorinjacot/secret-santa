@@ -1,1 +1,0 @@
-Salut {{ $name }}, ton partenaire du secret santa de physique rpz est {{ $partnerName }}.

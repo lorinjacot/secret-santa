@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\ConversationController;
-use App\Http\Controllers\HomeController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,25 +10,26 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
-Route::get('', function () {
-    return redirect()->route('conversations.create');
+Route::redirect('/', '/dashboard');
+
+Route::get('dashboard', function () {
+    return view('dashboard', ['users_count' => User::count(), 'user' => auth()->user()]);
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Volt::route('conversation/with-santa', 'pages.conversation.with-santa')
+        ->name('conversation.santa');
+    Volt::route('conversation/with-target', 'pages.conversation.with-target')
+        ->name('conversation.target');
 });
 
-Route::controller(HomeController::class)->prefix('')->name('')->group(function () {
-    Route::get('/message', 'message_form')->name('message_form');
-    Route::post('/message', 'send_message')->name('send_message');
-    Route::get('/signup', 'signup')->name('signup');
-    Route::post('/signup', 'signedup')->name('signedup');
-});
-
-Route::controller(ConversationController::class)->prefix('conversations')->name('conversations.')->group(function () {
-    Route::get('/create', 'create')->name('create');
-    Route::post('/', 'store')->name('store');
-    Route::get('/{conversation}/giver', 'show_giver')->name('show_giver');
-    Route::get('/{conversation}/receiver', 'show_receiver')->name('show_receiver');
-});
+require __DIR__.'/auth.php';

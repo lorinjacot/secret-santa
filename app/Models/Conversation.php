@@ -4,24 +4,47 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Conversation extends Model
 {
     use HasFactory;
 
-    public function __construct(array $attributes = [])
+    protected $fillable = [
+        'santa_id',
+        'target_id',
+    ];
+
+    /**
+     * L'utilisateur qui est le père Noël dans cette conversation.
+     */
+    public function santa(): BelongsTo
     {
-        $this->slug = md5(uniqid());
-        parent::__construct($attributes);
+        return $this->belongsTo(User::class, 'santa_id');
     }
 
-    public function messages()
+    /**
+     * L'utilisateur qui reçoit des cadeaux dans cette conversation.
+     */
+    public function target(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'target_id');
+    }
+
+    /**
+     * Les messages de cette conversation.
+     */
+    public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
     }
 
-    public function getRouteKeyName()
+    /**
+     * Les images de cette conversation.
+     */
+    public function images(): HasMany
     {
-        return 'slug';
+        return $this->hasMany(Image::class);
     }
 }
